@@ -10,10 +10,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
         background: #f4f4f9;
+        padding: 16px;
+        box-sizing: border-box;
       }
+
       .card {
         background: white;
         padding: 2rem;
@@ -21,16 +24,19 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         text-align: center;
         max-width: 90%;
-        width: 400px;
+        width: 420px;
       }
+
       h1 {
         color: #2c3e50;
         margin-bottom: 10px;
       }
+
       p {
         color: #7f8c8d;
         line-height: 1.6;
       }
+
       .btn {
         display: inline-block;
         margin-top: 20px;
@@ -41,13 +47,38 @@
         border-radius: 25px;
         font-weight: bold;
         transition: background 0.3s;
+        border: none;
+        cursor: pointer;
       }
+
       .btn:hover {
         background: #2980b9;
       }
+
+      .btn-secondary {
+        background: #95a5a6;
+      }
+
+      .btn-secondary:hover {
+        background: #7f8c8d;
+      }
+
       #error-msg {
         color: red;
         display: none;
+      }
+
+      #helper-msg {
+        margin-top: 16px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
       }
     </style>
   </head>
@@ -56,8 +87,19 @@
       <div id="content">
         <h1 id="poi-name">Đang tải...</h1>
         <p id="poi-summary">Vui lòng chờ trong giây lát...</p>
-        <a href="#" id="open-app-btn" class="btn">Mở trong ứng dụng</a>
+
+        <div class="actions">
+          <a href="#" id="open-app-btn" class="btn">Mở trong ứng dụng</a>
+          <button id="copy-code-btn" class="btn btn-secondary" type="button">
+            Sao chép mã địa điểm
+          </button>
+        </div>
+
+        <p id="helper-msg">
+          Nếu ứng dụng không mở, bạn vẫn có thể xem thông tin địa điểm trên web.
+        </p>
       </div>
+
       <div id="error-msg">
         <h1>Rất tiếc!</h1>
         <p>Không tìm thấy thông tin địa điểm này hoặc mã QR không hợp lệ.</p>
@@ -65,45 +107,97 @@
     </div>
 
     <script>
-      async function loadPOI() {
-        try {
-          // 1. Lấy mã POI từ URL
-          const pathParts = window.location.pathname.split("/");
-          const poiCode = pathParts[pathParts.length - 1];
+      const BASE_URL = "https://thuyetminh.netlify.app";
+      const APP_PACKAGE = "com.companyname.mauiapp1";
 
-          // 2. Tải dữ liệu từ file JSON
-          const response = await fetch("/data.json");
-          const data = await response.json();
+      function getPoiCodeFromPath() {
+        const pathParts = window.location.pathname.split("/").filter(Boolean);
 
-          // 3. Lọc ra tất cả các phiên bản ngôn ngữ của địa điểm này
-          const matchedPOIs = data.filter((item) => item.Code === poiCode);
-
-          if (matchedPOIs.length > 0) {
-            // Lấy ngôn ngữ hiện tại của trình duyệt (ví dụ: 'vi-VN' -> 'vi', 'en-US' -> 'en')
-            const browserLang = navigator.language.split("-")[0];
-
-            // Ưu tiên tìm object khớp với ngôn ngữ trình duyệt, nếu không có thì lấy mặc định cái đầu tiên
-            const poi =
-              matchedPOIs.find((item) => item.LanguageCode === browserLang) ||
-              matchedPOIs[0];
-
-            document.getElementById("poi-name").innerText = poi.Name;
-            document.getElementById("poi-summary").innerText = poi.Summary;
-
-            const appUrl = `https://thuyetminh.netlify.app/poi/${poiCode}`;
-            document.getElementById("open-app-btn").href = appUrl;
-          } else {
-            showError();
-          }
-        } catch (e) {
-          console.error("Lỗi khi tải dữ liệu:", e);
-          showError();
+        // Kỳ vọng path dạng /poi/HO_GUOM
+        if (pathParts.length >= 2 && pathParts[0].toLowerCase() === "poi") {
+          return pathParts[1].trim().toUpperCase();
         }
+
+        return null;
       }
 
       function showError() {
         document.getElementById("content").style.display = "none";
         document.getElementById("error-msg").style.display = "block";
+      }
+
+      async function copyPoiCode(code) {
+        try {
+          await navigator.clipboard.writeText(code);
+          alert("Đã sao chép mã địa điểm: " + code);
+        } catch (e) {
+          console.error("Không thể sao chép mã:", e);
+          alert("Không thể sao chép tự động. Mã địa điểm: " + code);
+        }
+      }
+
+      async function loadPOI() {
+        try {
+          const poiCode = getPoiCodeFromPath();
+          console.log("[WEB-POI] pathname =", window.location.pathname);
+          console.log("[WEB-POI] poiCode =", poiCode);
+
+          if (!poiCode) {
+            showError();
+            return;
+          }
+
+          const response = await fetch("/data.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Không tải được data.json");
+          }
+
+          const data = await response.json();
+
+          const matchedPOIs = data.filter(
+            (item) => String(item.Code || "").toUpperCase() === poiCode,
+          );
+
+          if (!matchedPOIs.length) {
+            showError();
+            return;
+          }
+
+          const browserLang = (navigator.language || "vi").split("-")[0];
+          const poi =
+            matchedPOIs.find((item) => item.LanguageCode === browserLang) ||
+            matchedPOIs.find((item) => item.LanguageCode === "vi") ||
+            matchedPOIs[0];
+
+          document.getElementById("poi-name").innerText = poi.Name || poiCode;
+          document.getElementById("poi-summary").innerText =
+            poi.Summary || "Không có mô tả ngắn cho địa điểm này.";
+
+          const fallbackUrl = `${BASE_URL}/poi/${poiCode}`;
+
+          const intentUrl =
+            `intent://thuyetminh.netlify.app/poi/${poiCode}` +
+            `#Intent;scheme=https;package=${APP_PACKAGE};action=android.intent.action.VIEW;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;S.browser_fallback_url=${encodeURIComponent(fallbackUrl)};end`;
+
+          console.log("[WEB-POI] fallbackUrl =", fallbackUrl);
+          console.log("[WEB-POI] intentUrl =", intentUrl);
+
+          const openBtn = document.getElementById("open-app-btn");
+          openBtn.href = intentUrl;
+          openBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("[WEB-POI] open-in-app clicked");
+            window.location.href = intentUrl;
+          });
+
+          const copyBtn = document.getElementById("copy-code-btn");
+          copyBtn.addEventListener("click", function () {
+            copyPoiCode(poiCode);
+          });
+        } catch (e) {
+          console.error("Lỗi khi tải dữ liệu:", e);
+          showError();
+        }
       }
 
       loadPOI();
