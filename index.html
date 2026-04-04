@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thuyết minh địa điểm</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #f4f4f9;
+      }
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+      }
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      p {
+        color: #7f8c8d;
+        line-height: 1.6;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+      .btn:hover {
+        background: #2980b9;
+      }
+      #error-msg {
+        color: red;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div id="content">
+        <h1 id="poi-name">Đang tải...</h1>
+        <p id="poi-summary">Vui lòng chờ trong giây lát...</p>
+        <a href="#" id="open-app-btn" class="btn">Mở trong ứng dụng</a>
+      </div>
+      <div id="error-msg">
+        <h1>Rất tiếc!</h1>
+        <p>Không tìm thấy thông tin địa điểm này hoặc mã QR không hợp lệ.</p>
+      </div>
+    </div>
+
+    <script>
+      async function loadPOI() {
+        try {
+          // 1. Lấy mã POI từ URL
+          const pathParts = window.location.pathname.split("/");
+          const poiCode = pathParts[pathParts.length - 1];
+
+          // 2. Tải dữ liệu từ file JSON
+          const response = await fetch("/data.json");
+          const data = await response.json();
+
+          // 3. Lọc ra tất cả các phiên bản ngôn ngữ của địa điểm này
+          const matchedPOIs = data.filter((item) => item.Code === poiCode);
+
+          if (matchedPOIs.length > 0) {
+            // Lấy ngôn ngữ hiện tại của trình duyệt (ví dụ: 'vi-VN' -> 'vi', 'en-US' -> 'en')
+            const browserLang = navigator.language.split("-")[0];
+
+            // Ưu tiên tìm object khớp với ngôn ngữ trình duyệt, nếu không có thì lấy mặc định cái đầu tiên
+            const poi =
+              matchedPOIs.find((item) => item.LanguageCode === browserLang) ||
+              matchedPOIs[0];
+
+            document.getElementById("poi-name").innerText = poi.Name;
+            document.getElementById("poi-summary").innerText = poi.Summary;
+
+            // URL dùng để kích hoạt Deep Link mở app
+            const appUrl = `https://thuyetminh-hcm.pages.dev/poi/${poiCode}`;
+            document.getElementById("open-app-btn").href = appUrl;
+          } else {
+            showError();
+          }
+        } catch (e) {
+          console.error("Lỗi khi tải dữ liệu:", e);
+          showError();
+        }
+      }
+
+      function showError() {
+        document.getElementById("content").style.display = "none";
+        document.getElementById("error-msg").style.display = "block";
+      }
+
+      loadPOI();
+    </script>
+  </body>
+</html>
