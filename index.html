@@ -90,8 +90,7 @@
             document.getElementById("poi-name").innerText = poi.Name;
             document.getElementById("poi-summary").innerText = poi.Summary;
 
-            // URL dùng để kích hoạt Deep Link mở app
-            const appUrl = `https://thuyetminh-hcm.pages.dev/poi/${poiCode}`;
+            const appUrl = `https://thuyetminh.netlify.app/poi/${poiCode}`;
             document.getElementById("open-app-btn").href = appUrl;
           } else {
             showError();
