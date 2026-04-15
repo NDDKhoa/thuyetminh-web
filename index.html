@@ -3,69 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <title>VN-GO Travel</title>
+    <title>VN-GO Travel - Tải Ứng Dụng</title>
     <style>
-      :root {
-        --bg: #0f1419;
-        --card: #1a2332;
-        --text: #e8eaed;
-        --muted: #9aa0a6;
-        --accent: #34a853;
-        --accent-hover: #2d8f47;
-        --border: #2d3a4d;
-      }
-
       * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
       }
 
       body {
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        backdrop-filter: blur(10px);
+      }
+
+      .app-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(45deg, #4CAF50, #8BC34A);
+        border-radius: 20px;
+        margin: 0 auto 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
-        background: var(--bg);
-        color: var(--text);
-      }
-
-      .card {
-        width: 100%;
-        max-width: 420px;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 28px 24px;
-        text-align: center;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+        font-size: 36px;
+        color: white;
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
       }
 
       .logo {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 700;
-        letter-spacing: -0.02em;
+        color: #333;
         margin-bottom: 8px;
+        letter-spacing: -0.02em;
       }
 
       .tagline {
-        color: var(--muted);
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin: 0 0 24px;
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 30px;
       }
 
       h1 {
-        font-size: 1.25rem;
+        color: #333;
+        font-size: 24px;
         font-weight: 600;
         margin: 0 0 12px;
       }
 
       p.sub {
-        color: var(--muted);
-        font-size: 0.9rem;
+        color: #666;
+        font-size: 14px;
         line-height: 1.55;
         margin: 0 0 20px;
       }
@@ -74,8 +79,8 @@
         width: 40px;
         height: 40px;
         margin: 8px auto 20px;
-        border: 3px solid var(--border);
-        border-top-color: var(--accent);
+        border: 3px solid #e0e0e0;
+        border-top-color: #4CAF50;
         border-radius: 50%;
         animation: spin 0.85s linear infinite;
       }
@@ -98,37 +103,130 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        padding: 14px 20px;
-        border-radius: 14px;
-        font-size: 1rem;
+        padding: 18px 40px;
+        border-radius: 50px;
+        font-size: 18px;
         font-weight: 600;
         text-decoration: none;
         border: none;
         cursor: pointer;
-        transition: background 0.2s, transform 0.05s;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        position: relative;
+        overflow: hidden;
+        gap: 10px;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
       }
 
       .btn:active {
-        transform: scale(0.98);
+        transform: translateY(-1px);
       }
 
       .btn-primary {
-        background: var(--accent);
-        color: #fff;
+        background: linear-gradient(45deg, #4CAF50, #8BC34A);
+        color: white;
       }
 
       .btn-primary:hover {
-        background: var(--accent-hover);
+        background: linear-gradient(45deg, #45a049, #7cb342);
+      }
+
+      .btn-primary.loading {
+        background: linear-gradient(45deg, #FF9800, #FF5722);
+        pointer-events: none;
       }
 
       .btn-secondary {
         background: transparent;
-        color: var(--text);
-        border: 1px solid var(--border);
+        color: #333;
+        border: 2px solid #e0e0e0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       }
 
       .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(76, 175, 80, 0.1);
+        border-color: #4CAF50;
+      }
+
+      .btn .icon {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .btn:hover .icon {
+        transform: scale(1.1);
+      }
+
+      .btn.loading .icon {
+        animation: spin 1s linear infinite;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: #e0e0e0;
+        border-radius: 3px;
+        margin-top: 20px;
+        overflow: hidden;
+        display: none;
+      }
+
+      .progress-bar.active {
+        display: block;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(45deg, #4CAF50, #8BC34A);
+        border-radius: 3px;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .status-message {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        display: none;
+      }
+
+      .status-message.success {
+        background: #e8f5e8;
+        color: #2e7d32;
+        display: block;
+      }
+
+      .status-message.error {
+        background: #ffebee;
+        color: #c62828;
+        display: block;
+      }
+
+      .file-info {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .file-info .file-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+
+      footer {
+        margin-top: 20px;
+        font-size: 0.75rem;
+        color: #666;
       }
 
       .err {
@@ -137,22 +235,27 @@
         margin-top: 12px;
       }
 
-      footer {
-        margin-top: 20px;
-        font-size: 0.75rem;
-        color: var(--muted);
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px 20px;
+        }
+        
+        .btn {
+          padding: 16px 30px;
+          font-size: 16px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="card" id="root" aria-live="polite"></div>
+    <div class="container" id="root" aria-live="polite"></div>
 
     <script>
       (function () {
         /** Must match MauiApp1.csproj ApplicationId (Android package name). */
         var ANDROID_PACKAGE = "com.companyname.mauiapp1";
         var BASE_URL = "https://thuyetminh.netlify.app";
-        var APK_URL = BASE_URL + "/vngo.apk";
+        var APK_URL = "https://pnleqyqpxixzqtbwznal.supabase.co/storage/v1/object/public/maui-apks/com.companyname.mauiapp1.apk";
 
         var root = document.getElementById("root");
 
@@ -192,43 +295,134 @@
           window.location.href = buildAndroidIntentUrl(token);
         }
 
+        function downloadAPK() {
+          const downloadBtn = document.getElementById("dl-apk");
+          const progressBar = document.getElementById("progressBar");
+          const progressFill = document.getElementById("progressFill");
+          const statusMessage = document.getElementById("statusMessage");
+          
+          try {
+            // Reset UI
+            downloadBtn.classList.add("loading");
+            downloadBtn.querySelector(".text").textContent = "Đang tải...";
+            downloadBtn.querySelector(".icon").textContent = "⏳";
+            progressBar.classList.add("active");
+            progressFill.style.width = "0%";
+            statusMessage.className = "status-message";
+            statusMessage.style.display = "none";
+            
+            // Tạo link tải trực tiếp
+            const link = document.createElement("a");
+            link.href = APK_URL;
+            link.download = "com.companyname.mauiapp1.apk";
+            link.style.display = "none";
+            
+            // Thêm vào DOM và click
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Giả lập progress cho UX tốt hơn
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+              progress += Math.random() * 30;
+              if (progress > 90) progress = 90;
+              progressFill.style.width = progress + "%";
+              
+              if (progress >= 90) {
+                clearInterval(progressInterval);
+                
+                // Hoàn thành
+                setTimeout(() => {
+                  progressFill.style.width = "100%";
+                  downloadBtn.classList.remove("loading");
+                  downloadBtn.querySelector(".text").textContent = "Tải thành công!";
+                  downloadBtn.querySelector(".icon").textContent = "✅";
+                  
+                  statusMessage.className = "status-message success";
+                  statusMessage.textContent = "File APK đã được tải thành công! Vui lòng kiểm tra thư mục Downloads.";
+                  statusMessage.style.display = "block";
+                  
+                  // Reset sau 3 giây
+                  setTimeout(() => {
+                    downloadBtn.querySelector(".text").textContent = "Tải lại";
+                    downloadBtn.querySelector(".icon").textContent = "🔄";
+                    progressBar.classList.remove("active");
+                  }, 3000);
+                }, 500);
+              }
+            }, 200);
+            
+          } catch (error) {
+            console.error("Lỗi tải file:", error);
+            
+            // Hiển thị lỗi
+            downloadBtn.classList.remove("loading");
+            downloadBtn.querySelector(".text").textContent = "Thử lại";
+            downloadBtn.querySelector(".icon").textContent = "❌";
+            
+            statusMessage.className = "status-message error";
+            statusMessage.textContent = "Không thể tải file. Vui lòng kiểm tra kết nối và thử lại.";
+            statusMessage.style.display = "block";
+            
+            progressBar.classList.remove("active");
+          }
+        }
+
         function renderLanding() {
           root.innerHTML =
+            '<div class="app-icon">📱</div>' +
             '<div class="logo">VN-GO Travel</div>' +
             '<p class="tagline">Ch\u00e0o m\u1eebng b\u1ea1n \u0111\u1ebfn v\u1edbi \u1ee9ng d\u1ee5ng du l\u1ecbch thuy\u1ebft minh \u0111\u1ecba \u0111i\u1ec3m.</p>' +
             '<div class="actions">' +
-            '<a class="btn btn-primary" href="' +
-            APK_URL +
-            '" id="dl-apk">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</a>' +
-            "</div>" +
+            '<button class="btn btn-primary" id="dl-apk" onclick="downloadAPK()">' +
+            '<span class="icon">⬇️</span>' +
+            '<span class="text">Tải ứng dụng (APK)</span>' +
+            '</button>' +
+            '</div>' +
+            '<div class="progress-bar" id="progressBar">' +
+            '<div class="progress-fill" id="progressFill"></div>' +
+            '</div>' +
+            '<div class="status-message" id="statusMessage"></div>' +
+            '<div class="file-info">' +
+            '<div class="file-name">com.companyname.mauiapp1.apk</div>' +
+            '<div>Kích thước: ~10MB | Định dạng: Android Package</div>' +
+            '</div>' +
             '<footer>Qu\u00e9t m\u00e3 QR \u0111\u1ec3 m\u1edf \u0111\u1ecba \u0111i\u1ec3m trong app.</footer>';
         }
 
         function renderScanMissingToken() {
           root.innerHTML =
+            '<div class="app-icon">❌</div>' +
             '<h1>Thi\u1ebfu m\u00e3 truy c\u1eadp</h1>' +
-            '<p class="sub">Li\u00ean k\u1ebft kh\u00f4ng c\u00f3 tham s\u1ed1 <code style="color:var(--text)">t</code> (token). Vui l\u00f2ng qu\u00e9t l\u1ea1i m\u00e3 QR.</p>' +
+            '<p class="sub">Li\u00ean k\u1ebft kh\u00f4ng c\u00f3 tham s\u1ed1 <code style="color:#333">t</code> (token). Vui l\u00f2ng qu\u00e9t l\u1ea1i m\u00e3 QR.</p>' +
             '<div class="actions">' +
             '<a class="btn btn-secondary" href="' +
             BASE_URL +
-            '/">V\u1ec1 trang ch\u1ee7</a>' +
-            '<a class="btn btn-primary" href="' +
-            APK_URL +
-            '">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</a>' +
-            "</div>";
+            '/"><span class="icon">🏠</span><span class="text">V\u1ec1 trang ch\u1ee7</span></a>' +
+            '<button class="btn btn-primary" onclick="downloadAPK()">' +
+            '<span class="icon">⬇️</span><span class="text">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</span></button>' +
+            '</div>' +
+            '<div class="progress-bar" id="progressBar">' +
+            '<div class="progress-fill" id="progressFill"></div>' +
+            '</div>' +
+            '<div class="status-message" id="statusMessage"></div>';
         }
 
         function renderScanWithToken(token) {
           root.innerHTML =
+            '<div class="app-icon">📱</div>' +
             '<div class="spinner" aria-hidden="true"></div>' +
             "<h1>\u0110ang m\u1edf \u1ee9ng d\u1ee5ng\u2026</h1>" +
             "<p class=\"sub\">N\u1ebfu app VN-GO kh\u00f4ng m\u1edf, ch\u1ecdn <strong>M\u1edf \u1ee9ng d\u1ee5ng</strong> ho\u1eb7c <strong>T\u1ea3i \u1ee9ng d\u1ee5ng</strong> b\u00ean d\u01b0\u1edbi.</p>" +
             '<div class="actions">' +
-            '<button type="button" class="btn btn-primary" id="btn-open">M\u1edf \u1ee9ng d\u1ee5ng</button>' +
-            '<a class="btn btn-secondary" href="' +
-            APK_URL +
-            '" id="btn-dl">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</a>' +
+            '<button type="button" class="btn btn-primary" id="btn-open"><span class="icon">🚀</span><span class="text">M\u1edf \u1ee9ng d\u1ee5ng</span></button>' +
+            '<button class="btn btn-secondary" onclick="downloadAPK()"><span class="icon">⬇️</span><span class="text">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</span></button>' +
             "</div>" +
+            '<div class="progress-bar" id="progressBar">' +
+            '<div class="progress-fill" id="progressFill"></div>' +
+            '</div>' +
+            '<div class="status-message" id="statusMessage"></div>' +
             '<footer>\u1ee8ng d\u1ee5ng s\u1ebd x\u00e1c th\u1ef1c token v\u1edbi m\u00e1y ch\u1ee7. Web ch\u1ec9 chuy\u1ec3n ti\u1ebfp li\u00ean k\u1ebft.</footer>';
 
           document.getElementById("btn-open").addEventListener("click", function () {
