@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VN-GO Travel - Tài Ung Dung</title>
+    <title>VN-GO Travel - Tải Ứng Dụng</title>
     <style>
       * {
         margin: 0;
@@ -376,14 +376,14 @@
           try {
             // Reset UI
             downloadBtn.classList.add("loading");
-            downloadBtn.querySelector(".text").textContent = "Ðang tài...";
-            downloadBtn.querySelector(".icon").textContent = "??";
+            downloadBtn.querySelector(".text").textContent = "Đang tải...";
+            downloadBtn.querySelector(".icon").textContent = "⏳";
             progressBar.classList.add("active");
             progressFill.style.width = "0%";
             statusMessage.className = "status-message";
             statusMessage.style.display = "none";
             
-            // Táo link tài trúc tiêp
+            // Tạo link tải trực tiếp
             const link = document.createElement("a");
             link.href = APK_URL;
             link.download = "com.companyname.mauiapp1.apk";
@@ -394,7 +394,7 @@
             link.click();
             document.body.removeChild(link);
             
-            // Giá lâm progress cho UX tôt hôn
+            // Giả lập progress cho UX tốt hơn
             let progress = 0;
             const progressInterval = setInterval(() => {
               progress += Math.random() * 30;
@@ -408,17 +408,17 @@
                 setTimeout(() => {
                   progressFill.style.width = "100%";
                   downloadBtn.classList.remove("loading");
-                  downloadBtn.querySelector(".text").textContent = "Tài thành công!";
-                  downloadBtn.querySelector(".icon").textContent = "??";
+                  downloadBtn.querySelector(".text").textContent = "Tải thành công!";
+                  downloadBtn.querySelector(".icon").textContent = "✅";
                   
                   statusMessage.className = "status-message success";
-                  statusMessage.textContent = "File APK Ðã duçc tài thành công! Vui lòng kiêm tra thü muc Downloads.";
+                  statusMessage.textContent = "File APK đã được tải thành công! Vui lòng kiểm tra thư mục Downloads.";
                   statusMessage.style.display = "block";
                   
                   // Reset sau 3 giây
                   setTimeout(() => {
-                    downloadBtn.querySelector(".text").textContent = "Tài lai";
-                    downloadBtn.querySelector(".icon").textContent = "??";
+                    downloadBtn.querySelector(".text").textContent = "Tải lại";
+                    downloadBtn.querySelector(".icon").textContent = "🔄";
                     progressBar.classList.remove("active");
                   }, 3000);
                 }, 500);
@@ -426,15 +426,15 @@
             }, 200);
             
           } catch (error) {
-            console.error("Lôi tài file:", error);
+            console.error("Lỗi tải file:", error);
             
-            // Hiên thí lôi
+            // Hiển thị lỗi
             downloadBtn.classList.remove("loading");
-            downloadBtn.querySelector(".text").textContent = "Thû lai";
-            downloadBtn.querySelector(".icon").textContent = "??";
+            downloadBtn.querySelector(".text").textContent = "Thử lại";
+            downloadBtn.querySelector(".icon").textContent = "❌";
             
             statusMessage.className = "status-message error";
-            statusMessage.textContent = "Không thê tài file. Vui lòng kiêm tra kêt nôi và thû lai.";
+            statusMessage.textContent = "Không thể tải file. Vui lòng kiểm tra kết nối và thử lại.";
             statusMessage.style.display = "block";
             
             progressBar.classList.remove("active");
@@ -443,13 +443,13 @@
 
         function renderLanding() {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
+            '<div class="app-icon">📱</div>' +
             '<div class="logo">VN-GO Travel</div>' +
-            '<p class="tagline">Chào mûng b?n d?n v?i úng dung du lîch thuyêt minh dîa di?m.</p>' +
+            '<p class="tagline">Ch\u00e0o m\u1eebng b\u1ea1n \u0111\u1ebfn v\u1edbi \u1ee9ng d\u1ee5ng du l\u1ecbch thuy\u1ebft minh \u0111\u1ecba \u0111i\u1ec3m.</p>' +
             '<div class="actions">' +
-            '<button class="btn btn-primary" id="dl-apk" onclick="tryOpenOrDownloadApp()">' +
-            '<span class="icon">??</span>' +
-            '<span class="text">Mõ úng dung</span>' +
+            '<button class="btn btn-primary" id="dl-apk" onclick="downloadAPK()">' +
+            '<span class="icon">⬇️</span>' +
+            '<span class="text">Tải ứng dụng (APK)</span>' +
             '</button>' +
             '</div>' +
             '<div class="progress-bar" id="progressBar">' +
@@ -458,22 +458,22 @@
             '<div class="status-message" id="statusMessage"></div>' +
             '<div class="file-info">' +
             '<div class="file-name">com.companyname.mauiapp1.apk</div>' +
-            '<div>Kích thûc: ~10MB | Dình dang: Android Package</div>' +
+            '<div>Kích thước: ~10MB | Định dạng: Android Package</div>' +
             '</div>' +
-            '<footer>Quét mã QR d? mõ dîa di?m trong app.</footer>';
+            '<footer>Qu\u00e9t m\u00e3 QR \u0111\u1ec3 m\u1edf \u0111\u1ecba \u0111i\u1ec3m trong app.</footer>';
         }
 
         function renderScanMissingToken() {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
-            '<h1>Thiêu mã truy câp</h1>' +
-            '<p class="sub">Liên kêt không có tham sô <code style="color:#333">t</code> (token). Vui lòng quét lai mã QR.</p>' +
+            '<div class="app-icon">❌</div>' +
+            '<h1>Thi\u1ebfu m\u00e3 truy c\u1eadp</h1>' +
+            '<p class="sub">Li\u00ean k\u1ebft kh\u00f4ng c\u00f3 tham s\u1ed1 <code style="color:#333">t</code> (token). Vui l\u00f2ng qu\u00e9t l\u1ea1i m\u00e3 QR.</p>' +
             '<div class="actions">' +
             '<a class="btn btn-secondary" href="' +
             BASE_URL +
-            '/"><span class="icon">??</span><span class="text">Vê trang chû</span></a>' +
-            '<button class="btn btn-primary" onclick="tryOpenOrDownloadApp()">' +
-            '<span class="icon">??</span><span class="text">Mõ úng dung</span></button>' +
+            '/"><span class="icon">🏠</span><span class="text">V\u1ec1 trang ch\u1ee7</span></a>' +
+            '<button class="btn btn-primary" onclick="downloadAPK()">' +
+            '<span class="icon">⬇️</span><span class="text">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</span></button>' +
             '</div>' +
             '<div class="progress-bar" id="progressBar">' +
             '<div class="progress-fill" id="progressFill"></div>' +
@@ -483,19 +483,19 @@
 
         function renderScanWithToken(token) {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
+            '<div class="app-icon">📱</div>' +
             '<div class="spinner" aria-hidden="true"></div>' +
-            "<h1>Ðang mõ úng dung...</h1>" +
-            "<p class=\"sub\">Nêu app VN-GO không mõ, ch?n <strong>Mõ úng dung</strong> ho?c <strong>Tài úng dung</strong> bên dôi.</p>" +
+            "<h1>\u0110ang m\u1edf \u1ee9ng d\u1ee5ng\u2026</h1>" +
+            "<p class=\"sub\">N\u1ebfu app VN-GO kh\u00f4ng m\u1edf, ch\u1ecdn <strong>M\u1edf \u1ee9ng d\u1ee5ng</strong> ho\u1eb7c <strong>T\u1ea3i \u1ee9ng d\u1ee5ng</strong> b\u00ean d\u01b0\u1edbi.</p>" +
             '<div class="actions">' +
-            '<button type="button" class="btn btn-primary" id="btn-open"><span class="icon">??</span><span class="text">Mõ úng dung</span></button>' +
-            '<button class="btn btn-secondary" onclick="downloadAPK()"><span class="icon">??</span><span class="text">Tài úng dung (APK)</span></button>' +
+            '<button type="button" class="btn btn-primary" id="btn-open"><span class="icon">🚀</span><span class="text">M\u1edf \u1ee9ng d\u1ee5ng</span></button>' +
+            '<button class="btn btn-secondary" onclick="downloadAPK()"><span class="icon">⬇️</span><span class="text">T\u1ea3i \u1ee9ng d\u1ee5ng (APK)</span></button>' +
             "</div>" +
             '<div class="progress-bar" id="progressBar">' +
             '<div class="progress-fill" id="progressFill"></div>' +
             '</div>' +
             '<div class="status-message" id="statusMessage"></div>' +
-            '<footer>Úng dung s? xác thûc token v?i máy chû. Web ch? chuy?n tiêp liên kêt.</footer>';
+            '<footer>\u1ee8ng d\u1ee5ng s\u1ebd x\u00e1c th\u1ef1c token v\u1edbi m\u00e1y ch\u1ee7. Web ch\u1ec9 chuy\u1ec3n ti\u1ebfp li\u00ean k\u1ebft.</footer>';
 
           document.getElementById("btn-open").addEventListener("click", function () {
             tryOpenApp(token);
