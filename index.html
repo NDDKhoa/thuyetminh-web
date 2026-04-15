@@ -5,246 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VN-Go Travel - Tải Ứng Dụng</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-      }
-
-      .container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 40px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        max-width: 500px;
-        width: 100%;
-        backdrop-filter: blur(10px);
-      }
-
-      .app-icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(45deg, #4CAF50, #8BC34A);
-        border-radius: 20px;
-        margin: 0 auto 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 36px;
-        color: white;
-        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
-      }
-
-      .logo {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 8px;
-        letter-spacing: -0.02em;
-      }
-
-      .tagline {
-        color: #666;
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 30px;
-      }
-
-      h1 {
-        color: #333;
-        font-size: 24px;
-        font-weight: 600;
-        margin: 0 0 12px;
-      }
-
-      p.sub {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.55;
-        margin: 0 0 20px;
-      }
-
-      .spinner {
-        width: 40px;
-        height: 40px;
-        margin: 8px auto 20px;
-        border: 3px solid #e0e0e0;
-        border-top-color: #4CAF50;
-        border-radius: 50%;
-        animation: spin 0.85s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .actions {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 8px;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 18px 40px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 600;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
-        position: relative;
-        overflow: hidden;
-        gap: 10px;
-      }
-
-      .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
-      }
-
-      .btn:active {
-        transform: translateY(-1px);
-      }
-
-      .btn-primary {
-        background: linear-gradient(45deg, #4CAF50, #8BC34A);
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: linear-gradient(45deg, #45a049, #7cb342);
-      }
-
-      .btn-primary.loading {
-        background: linear-gradient(45deg, #FF9800, #FF5722);
-        pointer-events: none;
-      }
-
-      .btn-secondary {
-        background: transparent;
-        color: #333;
-        border: 2px solid #e0e0e0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .btn-secondary:hover {
-        background: rgba(76, 175, 80, 0.1);
-        border-color: #4CAF50;
-      }
-
-      .btn .icon {
-        font-size: 20px;
-        transition: transform 0.3s ease;
-      }
-
-      .btn:hover .icon {
-        transform: scale(1.1);
-      }
-
-      .btn.loading .icon {
-        animation: spin 1s linear infinite;
-      }
-
-      .progress-bar {
-        width: 100%;
-        height: 6px;
-        background: #e0e0e0;
-        border-radius: 3px;
-        margin-top: 20px;
-        overflow: hidden;
-        display: none;
-      }
-
-      .progress-bar.active {
-        display: block;
-      }
-
-      .progress-fill {
-        height: 100%;
-        background: linear-gradient(45deg, #4CAF50, #8BC34A);
-        border-radius: 3px;
-        width: 0%;
-        transition: width 0.3s ease;
-      }
-
-      .status-message {
-        margin-top: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        font-size: 14px;
-        display: none;
-      }
-
-      .status-message.success {
-        background: #e8f5e8;
-        color: #2e7d32;
-        display: block;
-      }
-
-      .status-message.error {
-        background: #ffebee;
-        color: #c62828;
-        display: block;
-      }
-
-      .file-info {
-        background: #f5f5f5;
-        padding: 15px;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-size: 14px;
-        color: #666;
-      }
-
-      .file-info .file-name {
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 5px;
-        word-break: break-all;
-      }
-
-      footer {
-        margin-top: 20px;
-        font-size: 0.75rem;
-        color: #666;
-      }
-
-      .err {
-        color: #f28b82;
-        font-size: 0.88rem;
-        margin-top: 12px;
-      }
-
-      @media (max-width: 480px) {
-        .container {
-          padding: 30px 20px;
-        }
-        
-        .btn {
-          padding: 16px 30px;
-          font-size: 16px;
-        }
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+      .container { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); text-align: center; max-width: 500px; width: 100%; backdrop-filter: blur(10px); }
+      .app-icon { width: 80px; height: 80px; background: linear-gradient(45deg, #4CAF50, #8BC34A); border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: white; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3); }
+      .logo { font-size: 2rem; font-weight: 700; color: #333; margin-bottom: 8px; letter-spacing: -0.02em; }
+      .tagline { color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+      h1 { color: #333; font-size: 24px; font-weight: 600; margin: 0 0 12px; }
+      p.sub { color: #666; font-size: 14px; line-height: 1.55; margin: 0 0 20px; }
+      .spinner { width: 40px; height: 40px; margin: 8px auto 20px; border: 3px solid #e0e0e0; border-top-color: #4CAF50; border-radius: 50%; animation: spin 0.85s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 18px 40px; border-radius: 50px; font-size: 18px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3); position: relative; overflow: hidden; gap: 10px; }
+      .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4); }
+      .btn:active { transform: translateY(-1px); }
+      .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      .btn-primary { background: linear-gradient(45deg, #4CAF50, #8BC34A); color: white; }
+      .btn-primary:hover:not(:disabled) { background: linear-gradient(45deg, #45a049, #7cb342); }
+      .btn-primary.loading { background: linear-gradient(45deg, #FF9800, #FF5722); pointer-events: none; }
+      .btn-secondary { background: transparent; color: #333; border: 2px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+      .btn-secondary:hover:not(:disabled) { background: rgba(76, 175, 80, 0.1); border-color: #4CAF50; }
+      .btn .icon { font-size: 20px; transition: transform 0.3s ease; }
+      .btn:hover .icon { transform: scale(1.1); }
+      .btn.loading .icon { animation: spin 1s linear infinite; }
+      .progress-bar { width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; margin-top: 20px; overflow: hidden; display: none; }
+      .progress-bar.active { display: block; }
+      .progress-fill { height: 100%; background: linear-gradient(45deg, #4CAF50, #8BC34A); border-radius: 3px; width: 0%; transition: width 0.3s ease; }
+      .status-message { margin-top: 15px; padding: 10px; border-radius: 8px; font-size: 14px; display: none; }
+      .status-message.success { background: #e8f5e8; color: #2e7d32; display: block; }
+      .status-message.error { background: #ffebee; color: #c62828; display: block; }
+      .file-info { background: #f5f5f5; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 14px; color: #666; }
+      .file-info .file-name { font-weight: 600; color: #333; margin-bottom: 5px; word-break: break-all; }
+      footer { margin-top: 20px; font-size: 0.75rem; color: #666; }
+      .err { color: #f28b82; font-size: 0.88rem; margin-top: 12px; }
+      @media (max-width: 480px) { .container { padding: 30px 20px; } .btn { padding: 16px 30px; font-size: 16px; } }
     </style>
   </head>
   <body>
@@ -252,7 +46,6 @@
 
     <script>
       (function () {
-        /** Must match MauiApp1.csproj ApplicationId (Android package name). */
         var ANDROID_PACKAGE = "com.companyname.mauiapp1";
         var BASE_URL = "https://thuyetminh.netlify.app";
         var APK_URL = "https://pnleqyqpxixzqtbwznal.supabase.co/storage/v1/object/public/maui-apks/com.companyname.mauiapp1.apk";
@@ -273,10 +66,6 @@
           return false;
         }
 
-        /**
-         * Same URL shape as QrResolver (MAUI): https://thuyetminh.netlify.app/scan?t=<JWT>
-         * intent:// + scheme=https + package=... so Chrome routes VIEW to VN-Go, not Translate.
-         */
         function buildAndroidIntentUrl(token) {
           var encToken = encodeURIComponent(token);
           var fallback = encodeURIComponent(BASE_URL + "/?install=1#download");
@@ -296,14 +85,12 @@
         }
 
         function checkAppInstalled() {
-          // Schemes to try opening the app
           const schemes = [
             'vngo://',
             'com.companyname.mauiapp1://',
             'mauiapp1://'
           ];
           
-          // Try each scheme with a timeout
           schemes.forEach((scheme, index) => {
             setTimeout(() => {
               const iframe = document.createElement('iframe');
@@ -319,37 +106,28 @@
         }
 
         function checkAppAndShowDownload() {
-          // Get appropriate button IDs based on current page
           const checkBtn = document.getElementById("btn-check") || document.getElementById("btn-check-missing");
           const downloadBtn = document.getElementById("btn-download") || document.getElementById("btn-download-missing");
-          const progressBar = document.getElementById("progressBar");
-          const progressFill = document.getElementById("progressFill");
           const statusMessage = document.getElementById("statusMessage");
           
-          // Show checking state
           if (checkBtn) {
             checkBtn.classList.add("loading");
-            checkBtn.querySelector(".text").textContent = "Kiêmt ra app...";
-            checkBtn.querySelector(".icon").textContent = "??";
+            checkBtn.querySelector(".text").textContent = "Kiểm tra app...";
+            checkBtn.querySelector(".icon").textContent = "⏳";
           }
           
-          // Hide download button initially
           if (downloadBtn) {
             downloadBtn.style.display = "none";
           }
           
-          // Try to open app
           checkAppInstalled();
           
-          // Wait a bit then check if app opened
           setTimeout(() => {
-            // If user is still on this page, app wasn't opened
             if (document.visibilityState === 'visible') {
-              // App not installed, show download button
               if (checkBtn) {
                 checkBtn.classList.remove("loading");
-                checkBtn.querySelector(".text").textContent = "Không tìm tháy app";
-                checkBtn.querySelector(".icon").textContent = "??";
+                checkBtn.querySelector(".text").textContent = "Không tìm thấy app";
+                checkBtn.querySelector(".icon").textContent = "❌";
                 checkBtn.disabled = true;
               }
               
@@ -359,43 +137,34 @@
               
               if (statusMessage) {
                 statusMessage.className = "status-message";
-                statusMessage.textContent = "Không tìm tháy úng dung. Nhán nút tài duói.";
+                statusMessage.textContent = "Không tìm thấy ứng dụng. Nhấn nút tải dưới đây.";
                 statusMessage.style.display = "block";
               }
             } else {
-              // App opened successfully
               if (checkBtn) {
                 checkBtn.classList.remove("loading");
-                checkBtn.querySelector(".text").textContent = "? Ðã mõ app!";
-                checkBtn.querySelector(".icon").textContent = "??";
+                checkBtn.querySelector(".text").textContent = "Đã mở app!";
+                checkBtn.querySelector(".icon").textContent = "✅";
                 checkBtn.disabled = true;
               }
               
               if (statusMessage) {
                 statusMessage.className = "status-message success";
-                statusMessage.textContent = "Úng dung VN-Go Ðã mõ thành công!";
+                statusMessage.textContent = "Ứng dụng VN-Go đã mở thành công!";
                 statusMessage.style.display = "block";
               }
             }
           }, 2000);
         }
 
-        function tryOpenOrDownloadApp(token = null) {
-          if (token) {
-            tryOpenApp(token);
-          } else {
-            checkAppAndShowDownload();
-          }
-        }
-
-        function downloadAPK() {
-          const downloadBtn = document.getElementById("dl-apk");
+        // BƯỚC SỬA LỖI 1: Công khai hàm này ra window để các nút gọi được
+        window.downloadAPK = function() {
+          const downloadBtn = document.getElementById("btn-download") || document.getElementById("btn-download-missing") || document.getElementById("btn-dl");
           const progressBar = document.getElementById("progressBar");
           const progressFill = document.getElementById("progressFill");
           const statusMessage = document.getElementById("statusMessage");
           
           try {
-            // Reset UI
             downloadBtn.classList.add("loading");
             downloadBtn.querySelector(".text").textContent = "Đang tải...";
             downloadBtn.querySelector(".icon").textContent = "⏳";
@@ -404,18 +173,19 @@
             statusMessage.className = "status-message";
             statusMessage.style.display = "none";
             
-            // Tạo link tải trực tiếp
             const link = document.createElement("a");
             link.href = APK_URL;
+            
+            // BƯỚC SỬA LỖI 2: Thêm target="_blank" để trình duyệt không chặn
+            link.target = "_blank"; 
+            
             link.download = "com.companyname.mauiapp1.apk";
             link.style.display = "none";
             
-            // Thêm vào DOM và click
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Giả lập progress cho UX tốt hơn
             let progress = 0;
             const progressInterval = setInterval(() => {
               progress += Math.random() * 30;
@@ -425,7 +195,6 @@
               if (progress >= 90) {
                 clearInterval(progressInterval);
                 
-                // Hoàn thành
                 setTimeout(() => {
                   progressFill.style.width = "100%";
                   downloadBtn.classList.remove("loading");
@@ -433,10 +202,9 @@
                   downloadBtn.querySelector(".icon").textContent = "✅";
                   
                   statusMessage.className = "status-message success";
-                  statusMessage.textContent = "File APK đã được tải thành công! Vui lòng kiểm tra thư mục Downloads.";
+                  statusMessage.textContent = "File APK đang được tải xuống! Hãy kiểm tra thanh thông báo.";
                   statusMessage.style.display = "block";
                   
-                  // Reset sau 3 giây
                   setTimeout(() => {
                     downloadBtn.querySelector(".text").textContent = "Tải lại";
                     downloadBtn.querySelector(".icon").textContent = "🔄";
@@ -449,10 +217,9 @@
           } catch (error) {
             console.error("Lỗi tải file:", error);
             
-            // Hiển thị lỗi
             downloadBtn.classList.remove("loading");
             downloadBtn.querySelector(".text").textContent = "Thử lại";
-            downloadBtn.querySelector(".icon").textContent = "❌";
+            downloadBtn.querySelector(".icon").textContent = "🔄";
             
             statusMessage.className = "status-message error";
             statusMessage.textContent = "Không thể tải file. Vui lòng kiểm tra kết nối và thử lại.";
@@ -460,21 +227,21 @@
             
             progressBar.classList.remove("active");
           }
-        }
+        };
 
         function renderLanding() {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
-            '<div class="logo">?? VN-Go Travel</div>' +
-            '<p class="tagline">Chào mûng b?n d?n v?i úng dung du lîch thuyêt minh dîa di?m.</p>' +
+            '<div class="app-icon">🌍</div>' +
+            '<div class="logo">📱 VN-Go Travel</div>' +
+            '<p class="tagline">Chào mừng bạn đến với ứng dụng du lịch thuyết minh địa điểm.</p>' +
             '<div class="actions">' +
             '<button class="btn btn-primary" id="btn-check">' +
-            '<span class="icon">??</span>' +
-            '<span class="text">Kiêm tra và mô úng dung</span>' +
+            '<span class="icon">🔍</span>' +
+            '<span class="text">Kiểm tra và mở ứng dụng</span>' +
             '</button>' +
             '<button class="btn btn-secondary" id="btn-download" style="display:none;" onclick="downloadAPK()">' +
-            '<span class="icon">??</span>' +
-            '<span class="text">Tài úng dung (APK)</span>' +
+            '<span class="icon">⬇️</span>' +
+            '<span class="text">Tải ứng dụng (APK)</span>' +
             '</button>' +
             '</div>' +
             '<div class="progress-bar" id="progressBar">' +
@@ -483,11 +250,10 @@
             '<div class="status-message" id="statusMessage"></div>' +
             '<div class="file-info">' +
             '<div class="file-name">com.companyname.mauiapp1.apk</div>' +
-            '<div>Kích thûc: ~10MB | Dình dang: Android Package</div>' +
+            '<div>Kích thước: ~10MB | Định dạng: Android Package</div>' +
             '</div>' +
-            '<footer>Quét mã QR d? mõ dîa di?m trong app.</footer>';
+            '<footer>Quét mã QR để mở địa điểm trong app.</footer>';
 
-          // Gân sôi kiên click cho nût kiêm tra
           document.getElementById("btn-check").addEventListener("click", function () {
             checkAppAndShowDownload();
           });
@@ -495,24 +261,23 @@
 
         function renderScanMissingToken() {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
-            '<h1>Thiêu mã truy câp</h1>' +
-            '<p class="sub">Liên kêt không có tham sô <code style="color:#333">t</code> (token). Vui lòng quét lai mã QR.</p>' +
+            '<div class="app-icon">⚠️</div>' +
+            '<h1>Thiếu mã truy cập</h1>' +
+            '<p class="sub">Liên kết không có tham số <code style="color:#333">t</code> (token). Vui lòng quét lại mã QR.</p>' +
             '<div class="actions">' +
             '<a class="btn btn-secondary" href="' +
             BASE_URL +
-            '/"><span class="icon">??</span><span class="text">Vê trang chû</span></a>' +
+            '"><span class="icon">🏠</span><span class="text">Về trang chủ</span></a>' +
             '<button class="btn btn-primary" id="btn-check-missing">' +
-            '<span class="icon">??</span><span class="text">Kiêm tra và mô úng dung</span></button>' +
+            '<span class="icon">🔍</span><span class="text">Kiểm tra và mở ứng dụng</span></button>' +
             '<button class="btn btn-secondary" id="btn-download-missing" style="display:none;" onclick="downloadAPK()">' +
-            '<span class="icon">??</span><span class="text">Tài úng dung (APK)</span></button>' +
+            '<span class="icon">⬇️</span><span class="text">Tải ứng dụng (APK)</span></button>' +
             '</div>' +
             '<div class="progress-bar" id="progressBar">' +
             '<div class="progress-fill" id="progressFill"></div>' +
             '</div>' +
             '<div class="status-message" id="statusMessage"></div>';
 
-          // Gân sôi kiên click cho nût kiêm tra
           document.getElementById("btn-check-missing").addEventListener("click", function () {
             checkAppAndShowDownload();
           });
@@ -520,13 +285,13 @@
 
         function renderScanWithToken(token) {
           root.innerHTML =
-            '<div class="app-icon">??</div>' +
+            '<div class="app-icon">🚀</div>' +
             '<div class="spinner" aria-hidden="true"></div>' +
             "<h1>Đang mở ứng dụng...</h1>" +
             "<p class=\"sub\">Nếu app VN-Go không mở, chọn <strong>Mở ứng dụng</strong> hoặc <strong>Tải ứng dụng</strong> bên dưới.</p>" +
             '<div class="actions">' +
-            '<button type="button" class="btn btn-primary" id="btn-open"><span class="icon">🚀</span><span class="text">Mở ứng dụng</span></button>' +
-            '<button class="btn btn-secondary" onclick="downloadAPK()"><span class="icon">⬇️</span><span class="text">Tải ứng dụng (APK)</span></button>' +
+            '<button type="button" class="btn btn-primary" id="btn-open"><span class="icon">📱</span><span class="text">Mở ứng dụng</span></button>' +
+            '<button class="btn btn-secondary" id="btn-dl" onclick="downloadAPK()"><span class="icon">⬇️</span><span class="text">Tải ứng dụng (APK)</span></button>' +
             "</div>" +
             '<div class="progress-bar" id="progressBar">' +
             '<div class="progress-fill" id="progressFill"></div>' +
@@ -534,21 +299,13 @@
             '<div class="status-message" id="statusMessage"></div>' +
             '<footer>Ứng dụng sẽ xác thực token với máy chủ. Web chỉ chuyển tiếp liên kết.</footer>';
 
-          // Gắn sự kiện click cho nút mở ứng dụng
           document.getElementById("btn-open").addEventListener("click", function () {
-            if (token) {
-              tryOpenApp(token);
-            } else {
-              tryOpenOrDownloadApp();
-            }
+            tryOpenApp(token);
           });
 
-          // Tự động mở app nếu có token
-          if (token) {
-            setTimeout(function () {
-              tryOpenApp(token);
-            }, 500);
-          }
+          setTimeout(function () {
+            tryOpenApp(token);
+          }, 500);
         }
 
         function boot() {
